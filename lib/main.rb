@@ -59,7 +59,8 @@ else
 end
 
 #load RTP on windows
-if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
+#if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
+if false
   require 'win32/registry'
   registry = Win32::Registry::HKEY_LOCAL_MACHINE
   if $RGSS_VERSION == 1

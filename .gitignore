@@ -10,15 +10,15 @@ Game.rvproj2
 Gemfile.lock
 
 
-lib/Audio/
-lib/Data/
-lib/Graphics/
-lib/System/
+#lib/Audio/
+#lib/Data/
+#lib/Graphics/
+#lib/System/
 lib/Game.exe
-lib/Game.ini
-lib/Game.rxproj
-lib/Game.rvproj
-lib/Game.rvproj2
+#lib/Game.ini
+#lib/Game.rxproj
+#lib/Game.rvproj
+#lib/Game.rvproj2
 lib/Gemfile.lock
 
 
