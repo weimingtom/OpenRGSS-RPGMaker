@@ -1,0 +1,44 @@
+﻿
+----------------------------------
+
+main.rb:20: undefined method `[]' for nil:NilClass (NoMethodError)
+
+
+#load config
+--> $RGSS_CONFIG   = IniFile.load('Game.ini', {:encoding => "GBK"})['Game'] #how to detect charset?
+
+
+----------------------------------
+
+D:/Ruby187/lib/ruby/1.8/win32/registry.rb:528:in `open': 系统找不到指定的文件。
+(Win32::Registry::Error)
+        from D:/Ruby187/lib/ruby/1.8/win32/registry.rb:608:in `open'
+        from main.rb:66
+
+#load RTP on windows
+#if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
+if false
+  require 'win32/registry'
+  registry = Win32::Registry::HKEY_LOCAL_MACHINE
+  if $RGSS_VERSION == 1
+--->    registry.open('Software\Enterbrain\RGSS\RTP') do |reg|
+      [$RGSS_CONFIG['RTP1'], $RGSS_CONFIG['RTP2'], $RGSS_CONFIG['RTP3']].each do |rtp|
+        (RGSS.load_path << reg[rtp].force_encoding(Encoding.default_external).encode('UTF-8')) rescue nil
+      end
+    end
+    
+    
+----------------------------------
+
+rescue Exception => exception
+  if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
+--->    #msgbox(exception, exception.backtrace.join("\n"))
+	raise exception
+  else
+    raise exception
+  end
+end
+
+    
+----------------------------------
+
