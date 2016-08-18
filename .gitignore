@@ -1,12 +1,12 @@
-Audio/
-Data/
-Graphics/
-System/
+#Audio/
+#Data/
+#Graphics/
+#System/
 Game.exe
-Game.ini
-Game.rxproj
-Game.rvproj
-Game.rvproj2
+#Game.ini
+#Game.rxproj
+#Game.rvproj
+#Game.rvproj2
 Gemfile.lock
 
 
