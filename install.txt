@@ -1,2 +1,14 @@
+http://rubyinstaller.org/downloads
+http://dl.bintray.com/oneclick/rubyinstaller/
 rubyinstaller-1.8.7-p374.exe
+
+cd bundle
+gem install bundle --local
+
+gem list
+
 bundle install --local --verbose
+
+cd lib
+set path=D:\Ruby187\lib\ruby\gems\1.8\gems\rubysdl-mswin32-1.8-2.1.1.1\dll;%path%
+ruby main.rb
