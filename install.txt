@@ -1,0 +1,2 @@
+rubyinstaller-1.8.7-p374.exe
+bundle install --local --verbose

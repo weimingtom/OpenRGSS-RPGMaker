@@ -1,13 +1,23 @@
 $LOAD_PATH.unshift '/home/zh99998/RubymineProjects/OpenRGSS/lib'
 
+require 'rubygems' #for ruby 1.8.7
 require 'inifile'
 require 'openrgss'
 require 'zlib'
 
+#see http://stackoverflow.com/questions/4583924/string-force-encoding-in-ruby-1-8-7-or-rails-2-x
+#replace for force_encoding('UTF-8')
+require 'iconv'
+class String
+  def to_my_utf8
+    ::Iconv.conv('UTF-8//IGNORE', 'UTF-8', self + ' ')[0..-2]
+  end
+end
+
 include RGSS
 
 #load config
-$RGSS_CONFIG   = IniFile.load('Game.ini', encoding: "GBK")['Game'] #how to detect charset?
+$RGSS_CONFIG   = IniFile.load('Game.ini', {:encoding => "GBK"})['Game'] #how to detect charset?
 
 #set title
 RGSS.title    = $RGSS_CONFIG['Title']
@@ -25,11 +35,11 @@ end
 #load RPG module
 case $RGSS_VERSION
 when 1
-  require_relative 'rpg/rpgxp'
+  require 'rpg/rpgxp'
 when 2
-  require_relative 'rpg/rpgvx'
+  require 'rpg/rpgvx'
 when 3
-  require_relative 'rpg/rpgva'
+  require 'rpg/rpgva'
 end
 
 #set screen size.
@@ -69,9 +79,11 @@ end
 $RGSS_SCRIPTS = load_data $RGSS_CONFIG['Scripts'].gsub('\\', '/')
 begin
 if $RGSS_VERSION <= 2
-  rgss_main { $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).force_encoding('UTF-8'), TOPLEVEL_BINDING, script[1], 0 } }
+  #force_encoding('UTF-8')
+  rgss_main { $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).to_my_utf8, TOPLEVEL_BINDING, script[1], 0 } }
 else
-  $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).force_encoding('UTF-8'), TOPLEVEL_BINDING, script[1], 0 }
+	#force_encoding('UTF-8')
+  $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).to_my_utf8, TOPLEVEL_BINDING, script[1], 0 }
   #$RGSS_SCRIPTS.each do |script|
   #for IDE debug
   #open("Data/#{script[1]}.rb", 'w') { |f| f.write Zlib::Inflate.inflate(script[2]) }
@@ -82,7 +94,8 @@ rescue SystemExit
 
 rescue Exception => exception
   if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
-    msgbox(exception, exception.backtrace.join("\n"))
+    #msgbox(exception, exception.backtrace.join("\n"))
+	raise exception
   else
     raise exception
   end
