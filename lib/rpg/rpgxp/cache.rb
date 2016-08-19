@@ -67,6 +67,7 @@ module RPG
         x = (tile_id - 384) % 8 * 32
         y = (tile_id - 384) / 8 * 32
         rect = Rect.new(x, y, 32, 32)
+        Log.debug('xxxxxxxxx===============')
         @cache[key].blt(0, 0, self.tileset(filename), rect)
         @cache[key].hue_change(hue)
       end

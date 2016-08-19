@@ -240,9 +240,12 @@ class Bitmap
 
     # @text << [str, x, y, @font.color.red, @font.color.green, @font.color.blue] See you ~
     tmp = @font.entity.render_blended_utf8(str,  @font.color.red, @font.color.green, @font.color.blue)
-    tmp.set_alpha(SDL::RLEACCEL ,0)
-    @entity.put tmp,x,y
-    #SDL::Surface.transformBlit tmp,@entity,0,1,1,0,0,x, y,SDL::Surface::TRANSFORM_AA|SDL::Surface::TRANSFORM_SAFE|SDL::Surface::TRANSFORM_SAFE
+    #FIXME:
+    if tmp != nil
+      tmp.set_alpha(SDL::RLEACCEL ,0)
+      @entity.put tmp,x,y
+      #SDL::Surface.transformBlit tmp,@entity,0,1,1,0,0,x, y,SDL::Surface::TRANSFORM_AA|SDL::Surface::TRANSFORM_SAFE|SDL::Surface::TRANSFORM_SAFE
+    end
   end
 
   # Gets the box (Rect) used when drawing the string str with the draw_text method. Does not include the outline portion (RGSS3) and the angled portions of italicized text.
